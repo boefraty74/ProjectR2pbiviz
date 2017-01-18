@@ -1,0 +1,102 @@
+#R2pbivizScript.R
+
+source("pbivizSystemCalls.R")
+source("rcv2files.R")
+
+
+rcvFile <- "c:/Users/boefraty/projects/PBI/R/R2pbiviz/rcv.json"
+
+
+files2Copy = 'c:/Users/boefraty/projects/PBI/R/R2pbiviz/pbivizFiles2Copy'
+
+capTemplateFile <- "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template/template_capabilities.json"
+visualtsTemplateFile <- "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template/src/template_visual.ts"
+depTemplateFile <- "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template/template_dependencies.json"
+pbivizJsonTemplateFile <- "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template/template_pbiviz.json"
+
+
+#parentDirpbivizOutFolder = dirname(pbivizOutFolderPath)
+parentPbivizOutFolder = "c:/Users/boefraty/projects/PBI/R/R2pbiviz"
+pbivizOutName = "PowerBI-visuals-template"
+
+pbivizOutFolderPath = file.path(parentPbivizOutFolder, pbivizOutName)
+
+capOutFile <- file.path(pbivizOutFolderPath,"capabilities.json")
+visualtsOutFile <- file.path(pbivizOutFolderPath,"visual.ts")
+depOutFile <- file.path(pbivizOutFolderPath,"dependencies.json")
+pbivizJsonOutFile <- file.path(pbivizOutFolderPath,"pbiviz.json")
+
+
+
+ConvertR2pbivizFull = function(parentFolder=getwd(),pbivizOutName = "newRpbiviz",rcvJsonName = NULL, rScriptName = NULL, rFuncName = NULL,
+                               replaceIfExist = FALSE, dirWithFiles2Copy = NULL, templateFolder = getwd())
+{
+  
+  # create new folder (system call)
+  pbivizNewSystemCall(parentPbivizOutFolder = parentFolder, pbivizOutName = pbivizOutName, replaceIfExist = replaceIfExist)
+  
+  
+  pbivizOutFolderPath = file.path(parentFolder, pbivizOutName)
+  
+  #templates
+  capTemplateFile <- file.path(templateFolder,"template_capabilities.json")
+  visualtsTemplateFile <- file.path(templateFolder,"src","template_visual.ts")
+  depTemplateFile <- file.path(templateFolder,"template_dependencies.json")
+  pbivizJsonTemplateFile <- file.path(templateFolder,"template_pbiviz.json")
+  
+  #files to prepare
+  capOutFile <- file.path(pbivizOutFolderPath,"capabilities.json")
+  visualtsOutFile <- file.path(pbivizOutFolderPath,"src", "visual.ts")
+  depOutFile <- file.path(pbivizOutFolderPath,"dependencies.json")
+  pbivizJsonOutFile <- file.path(pbivizOutFolderPath,"pbiviz.json")
+  rScriptOutFile <- file.path(pbivizOutFolderPath,"script.r")
+  
+  # generate: capabilities.json, visual.ts, dependencies.json, pbiviz.json 
+  rcv2capabilities(rcvFile = rcvJsonName, capOutFile, capTemplateFile)
+  rcv2visualts(rcvFile = rcvJsonName, visualtsOutFile, visualtsTemplateFile)
+  rcv2dependencies(rcvFile = rcvJsonName, depOutFile, depTemplateFile)
+  rcv2pbivizJson(rcvFile = rcvJsonName, pbivizJsonOutFile, pbivizJsonTemplateFile)
+  
+  if(!is.null(dirWithFiles2Copy))
+  {
+    CopyFilesFromFolder(dirWithFiles2Copy)
+  }
+  
+  #generate script.r
+  if(!is.null(rScriptName))
+    rcv2scriptR(rcvFile  = rcvJsonName, scriptRname = rScriptName, functionRname = rFuncName, newScriptRName = rScriptOutFile)
+  
+  # package pbiviz (system call)
+  pbivizPackageSystemCall(file.path(parentFolder, pbivizOutName))
+  
+}
+
+
+
+
+# # create new folder (system call)
+# pbivizNewSystemCall(parentPbivizOutFolder,pbivizOutName,replaceIfExist = FALSE,files2Copy = files2Copy)
+# 
+# #---here suppose to generate rcvFile JSON ---
+# 
+# # generate: capabilities.json, visual.ts, dependencies.json, pbiviz.json , 
+# rcv2capabilities(rcvFile,capOutFile,capTemplateFile)
+# rcv2visualts(rcvFile,visualtsOutFile,visualtsTemplateFile)
+# rcv2dependencies(rcvFile,depOutFile,depTemplateFile)
+# rcv2pbivizJson(rcvFile,pbivizJsonOutFile,pbivizJsonTemplateFile)
+# 
+# 
+# 
+# # package pbiviz (system call)
+# pbivizPackageSystemCall(file.path(parentPbivizOutFolder,pbivizOutName))
+
+ConvertR2pbivizFull(parentFolder=parentPbivizOutFolder,
+                    pbivizOutName = "newRpbiviz",
+                    rcvJsonName = rcvFile, 
+                    rScriptName = "c:/Users/boefraty/projects/PBI/R/R2pbiviz/inputs/rName.r", 
+                    rFuncName = "funcName",
+                    replaceIfExist = FALSE, 
+                    files2Copy = "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template/pbivizFiles2Copy", 
+                    templateFolder = "c:/Users/boefraty/projects/PBI/R/R2pbiviz/PowerBI-visuals-template")
+
+

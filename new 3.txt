@@ -1,0 +1,38 @@
+source("rcvUtilities.R")
+
+pbivizPackageSystemCall <- function(pbivizOutFolderPath)
+{
+  tempPath = getwd()
+  setwd(pbivizOutFolderPath)
+  system("pbiviz package", wait = TRUE)
+  setwd(tempPath)
+}
+
+pbivizNewSystemCall <- function(parentPbivizOutFolder,pbivizOutName,replaceIfExist = FALSE)
+{
+  subDir = file.path(parentPbivizOutFolder,pbivizOutName)
+  actionFlag = ((!file.exists(subDir)) || (file.exists(subDir) && replaceIfExist)) 
+  if(actionFlag)
+  {
+    tempPath = getwd()
+    setwd(parentPbivizOutFolder)
+    #pbiviz new sampleCorrPlotRVisual -t rvisual
+    callCommand = paste("pbiviz new",pbivizOutName,"-t rvisual",sep =" ")
+    system(callCommand, wait = TRUE)
+    setwd(tempPath)
+    
+  
+      
+  }
+  else
+    print("Already exists...")
+}
+
+
+CopyFilesFromFolder <- function(dirWithfiles2Copy, toDir)
+{
+  ddd = dir(dirWithfiles2Copy, all.files = TRUE)
+  for (d in ddd)
+    file.copy(from=file.path(dirWithfiles2Copy,d), to=toDir, recursive = TRUE,  copy.mode = TRUE, overwrite = TRUE)
+  
+}
