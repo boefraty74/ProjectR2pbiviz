@@ -1,0 +1,153 @@
+{
+	"dataRoles" : [
+		{
+			"displayName" : "Time",
+			"description" : "Time column",
+			"kind" : "Grouping",
+			"name" : "Time"
+		},
+		{
+			"displayName" : "Value",
+			"description" : "Numeric",
+			"kind" : "Measure",
+			"name" : "Value"
+		}
+	],
+	"dataViewMappings" : [
+		{
+			"conditions" : [
+				{
+					"Time" : {
+						"max" : 1
+					},
+					"Value" : {
+						"max" : 1
+					}
+				}
+			],
+			"scriptResult" : {
+				"dataInput" : {
+					"table" : {
+						"rows" : {
+							"select" : [
+								{
+									"for" : {
+										"in" : "Time"
+									}
+								},
+								{
+									"for" : {
+										"in" : "Value"
+									}
+								}
+							],
+							"dataReductionAlgorithm" : {
+								"top" : {}
+							}
+						}
+					}
+				},
+				"script" : {
+					"scriptProviderDefault" : "R",
+					"scriptOutputType" : "png",
+					"source" : {
+						"objectName" : "rcv_script",
+						"propertyName" : "source"
+					},
+					"provider" : {
+						"objectName" : "rcv_script",
+						"propertyName" : "provider"
+					}
+				}
+			}
+		}
+	],
+	"objects" : {
+		"settings_tsdecomp_params" : {
+			"displayName" : "tsdecomp settings",
+			"properties" : {
+				"show" : {
+					"type" : {
+						"bool" : true
+					}
+				},
+				"freq" : {
+					"displayName" : "frequency",
+					"description" : "frequency",
+					"type" : {
+						"numeric" : true
+					}
+				},
+				"degree" : {
+					"displayName" : "degree",
+					"description" : "degree",
+					"type" : {
+						"bool" : true
+					}
+				},
+				"robustToOutliers" : {
+					"displayName" : "robustToOutliers",
+					"description" : "robustToOutliers",
+					"type" : {
+						"bool" : true
+					}
+				},
+				"additive" : {
+					"displayName" : "additive",
+					"description" : "additive",
+					"type" : {
+						"bool" : true
+					}
+				},
+				"trendSmoothness" : {
+					"displayName" : "trendSmoothness",
+					"description" : "trendSmoothness",
+					"type" : {
+						"numeric" : true
+					}
+				},
+				"drawWhat" : {
+					"displayName" : "drawWhat",
+					"description" : "drawWhat",
+					"type" : {
+						"enumeration" : [
+							{
+								"displayName" : "all",
+								"value" : "all"
+							},
+							{
+								"displayName" : "trend",
+								"value" : "trend"
+							},
+							{
+								"displayName" : "seasonalyAdjasted",
+								"value" : "seasonalyAdjasted"
+							},
+							{
+								"displayName" : "clean",
+								"value" : "clean"
+							}
+						]
+					}
+				}
+			}
+		},
+		"rcv_script" : {
+			"properties" : {
+				"provider" : {
+					"type" : {
+						"text" : true
+					}
+				},
+				"source" : {
+					"type" : {
+						"scripting" : {
+							"source" : true
+						}
+					}
+				}
+			}
+		}
+	},
+	"suppressDefaultTitle" : true
+}

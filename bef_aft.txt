@@ -1,0 +1,12 @@
+Before: 
+- "new" call from command line
+- EDIT: script.R
+- EDIT: capabilities.json
+- EDIT: visual.ts (in 4 places)
+- EDIT: dependencies.json
+- EDIT: pbiviz.json 
+- "package" call from command line
+
+Now: 
+ - EDIT: 1 json 
+ - CALL: R 

@@ -1,0 +1,412 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Values",
+      "description": "Add two or more numeric columns",
+      "kind": "Grouping",
+      "name": "Values",
+      "conditions": [
+        {
+          "max": 1000,
+          "min": 2
+        }
+      ]
+    },
+    {
+      "displayName": "Data point labels",
+      "description": "Short label(text or numeric) for each data point (optional)",
+      "kind": "GroupingOrMeasure",
+      "name": "PointLabels",
+      "conditions": [
+        {
+          "max": 1,
+          "min": 0
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "settings_prepocessing_params": {
+      "displayName": "Data preprocessing",
+      "properties": {
+        "show": {
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "scaleData": {
+          "displayName": "Scale data",
+          "description": "Used to standardize the range of features of data",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "applyPCA": {
+          "displayName": "Apply PCA",
+          "description": "Recommended for data with more than two dimensions",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        }
+      }
+    },
+    "settings_clusterNum_params": {
+      "displayName": "Clusters definition",
+      "description": "Allows you to tune the density and the size of clusters",
+      "properties": {
+		"granularityParameterType": {
+          "displayName": "Granularity method",
+          "description": "Switch between preferable method to set granularity (eps)",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "auto",
+                "value": "auto"
+              },
+              {
+                "displayName": "scale",
+                "value": "scale"
+              },
+              {
+                "displayName": "manual",
+                "value": "manual"
+              }
+            ]
+          },
+          "default": "scale",
+          "min": null,
+          "max": null
+        },
+		"percentile": {
+          "displayName": "Granularity",
+		  "description": "User-defined granularity level, used only if  autoGranularity = FALSE. Smaller values correspond to more clusters", 
+          "type": {
+            "numeric": true
+          },
+		  "rname": "granularityLevel",
+          "default": 50,
+          "min": 1,
+          "max": 100
+        },
+		"eps": {
+          "displayName": "Reachability distance",
+		  "description": "How close points should be to each other to be considered a part of a cluster (eps)", 
+          "type": {
+            "numeric": true
+          },
+          "default": 0,
+          "min": 0,
+          "max": 100000000
+        }
+      }
+    },
+    "settings_viz_params": {
+      "displayName": "Visual appearance",
+      "properties": {
+        "show": {
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null
+        },
+        "drawEllipse": {
+          "displayName": "Draw ellipse",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "drawConvexHull": {
+          "displayName": "Draw convex hull",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "drawCenters": {
+          "displayName": "Draw centroid",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "percentile": {
+		  "rname": "pointOpacity",
+          "displayName": "Point opacity",
+          "type": {
+            "numeric": true
+          },
+          "default": 30,
+          "min": 0,
+          "max": 100
+        },
+        "weight": {
+		  "rname": "pointSize",
+          "displayName": "Point size",
+          "type": {
+            "numeric": true
+          },
+          "default": 10,
+          "min": 1,
+          "max": 50
+        }
+      }
+    },
+    "settings_labeling_params": {
+      "displayName": "Points labeling",
+      "properties": {
+        "show": {
+		"rname": "addLabel2points",
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null
+        },
+        "textSize": {
+		  "rname": "labelingFontSize",
+          "displayName": "Font size",
+          "type": {
+            "numeric": true
+          },
+          "default": 8,
+          "min": 8,
+          "max": 40
+        },
+        "percentile": {
+		  "rname": "labelOpacity",
+          "displayName": "Label opacity",
+          "type": {
+            "numeric": true
+          },
+          "default": 100,
+          "min": 0,
+          "max": 100
+        },
+        "maxLenPointLabel": {
+          "displayName": "Limit label length",
+          "description": "Abbreviate labels to a limited length",
+          "type": {
+            "numeric": true
+          },
+          "default": 5,
+          "min": 1,
+          "max": 100
+        },
+        "percentile1": {
+          "displayName": "Percentage of points labeled",
+          "description": "Avoids cluttering text",
+		  "rname": "percPointsLabeled",
+          "type": {
+            "numeric": true
+          },
+          "default": 100,
+          "min": 0,
+          "max": 100
+        }
+      }
+    },
+    "settings_representative_params": {
+      "displayName": "Cluster representative labeling",
+      "description": "Add a label to the typical representative of each cluster",
+      "properties": {
+        "show": {
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null, 
+		  "rname": "addLabel2clusterDelegate"
+        },
+        "textSize": {
+		  "rname": "representativeFontSize",
+          "displayName": "Font size",
+          "type": {
+            "numeric": true
+          },
+          "default": 8,
+          "min": 1,
+          "max": 40
+        },
+        "maxLenDelegate": {
+          "displayName": "Limit label length",
+          "description": "Abbreviate labels to a limited length",
+          "type": {
+            "numeric": true
+          },
+          "default": 30,
+          "min": 1,
+          "max": 100
+        }
+      }
+    },
+    "settings_legend_params": {
+      "displayName": "Legend",
+      "description": "Parameters for the clustering plot legend",
+      "properties": {
+        "show": {
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null,
+		  "rname": "addLegend"
+        },
+        "palleteType": {
+          "displayName": "Pallete type",
+          "description": "Color pallete type",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "rainbow",
+                "value": "rainbow"
+              },
+              {
+                "displayName": "gray",
+                "value": "gray"
+              },
+              {
+                "displayName": "cm",
+                "value": "cm"
+              },
+              {
+                "displayName": "topo",
+                "value": "topo"
+              },
+              {
+                "displayName": "terrain",
+                "value": "terrain"
+              },
+              {
+                "displayName": "heat",
+                "value": "heat"
+              }
+            ]
+          },
+          "default": "rainbow",
+          "min": null,
+          "max": null
+        },
+		"outLierCol":{
+            "displayName": "Color of outliers",
+            "type": { "fill": { "solid": { "color": true }}},
+			 "default": "black",
+			 "min": null,
+			"max": null
+          }
+      }
+    },
+    "settings_additional_params": {
+      "displayName": "Additional parameters",
+      "description": "Additional and experimental parameters",
+      "properties": {
+        "showWarnings": {
+          "displayName": "Show warnings",
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null
+        },
+        "autoParamMinPts": {
+          "displayName": "Find minimum points automatically",
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null
+        },
+		"minPtsParam": {
+          "displayName": "Minimum points per cluster",
+		  "description": "User-defined minimum points parameter. Smaller values correspond to more clusters", 
+          "type": {
+            "numeric": true
+          },
+          "default": 5,
+          "min": 1,
+          "max": 1000
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "cranPackages": [
+      {
+        "name": "scales",
+        "displayName": "scales: Scale Functions for Visualization",
+        "url": "https://cran.r-project.org/web/packages/scales/index.html"
+      },
+      {
+        "name": "fpc",
+        "displayName": "fpc: Flexible Procedures for Clustering",
+        "url": "https://cran.r-project.org/web/packages/fpc/index.html"
+      },
+      {
+        "name": "car",
+        "displayName": "car: Companion to Applied Regression",
+        "url": "https://cran.r-project.org/web/packages/car/index.html"
+      },
+      {
+        "name": "dbscan",
+        "displayName": "dbscan: Density Based Clustering of Applications with Noise (DBSCAN) and Related Algorithms",
+        "url": "https://cran.r-project.org/web/packages/dbscan/index.html"
+      }
+    ]
+  },
+  "pbiviz": {
+    "visual": {
+      "name": "PowerBI-visuals-dbscan",
+      "displayName": "clustering with outliers",
+      "guid": "PBI_CV_Template",
+      "visualClassName": "Visual",
+      "version": "1.0.0",
+      "description": "<span>Some description <br/><br/><span style='font-style:italic'>Service prerequisites:</span> R-powered custom visual is used in service seamlessly<br/><br /><span style='font-style:italic'>Desktop prerequisites:</span> To run R scripts in Power BI Desktop, you must separately install R on your local computer.<br />You can download and install R for free from the <a href='https://mran.revolutionanalytics.com/download/'>Revolution Open download page</a> or the <a href='https://cran.r-project.org/bin/windows/base/'>CRAN Repository</a><br /><br /> <span style='font-style:italic'> R package dependencies(auto-installed): </span> some packages <br /><br /> <span style='font-style:italic'> Supports R versions: </span> R 3.3.1, R 3.3.0, MRO 3.3.1, MRO 3.3.0 <br /></span>",
+      "supportUrl": "http://community.powerbi.com/",
+      "gitHubUrl": ""
+    },
+    "apiVersion": "1.2.0",
+    "author": {
+      "name": "",
+      "email": ""
+    },
+    "assets": {
+      "icon": "assets/icon.png"
+    },
+    "externalJS": [],
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": "dependencies.json"
+  }, 
+  "info":{
+	"nameParentDir": "c:/Users/boefraty/projects/PBI/R/ProjectR2pbiviz",
+	"namePbivizDir": "pbivizDbscan2",
+	"created": null, 
+	"lastUpdate": null
+  }, 
+  "sourceRscript":{
+	"inputRscriptName":"c:/Users/boefraty/projects/PBI/R/ProjectR2pbiviz/inputs/dbscan_clustering/function_visGal_clustering_with_outliers.R", 
+	"funcName": "funcClusterDbscan"
+  }
+}

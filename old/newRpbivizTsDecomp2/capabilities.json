@@ -1,0 +1,173 @@
+{
+	"dataRoles" : [
+		{
+			"displayName" : "Time",
+			"description" : "Time column",
+			"kind" : "Grouping",
+			"name" : "Time"
+		},
+		{
+			"displayName" : "Value",
+			"description" : "Numeric",
+			"kind" : "Measure",
+			"name" : "Value"
+		}
+	],
+	"dataViewMappings" : [
+		{
+			"conditions" : [
+				{
+					"Time" : {
+						"max" : 1
+					},
+					"Value" : {
+						"max" : 1
+					}
+				}
+			],
+			"scriptResult" : {
+				"dataInput" : {
+					"table" : {
+						"rows" : {
+							"select" : [
+								{
+									"for" : {
+										"in" : "Time"
+									}
+								},
+								{
+									"for" : {
+										"in" : "Value"
+									}
+								}
+							],
+							"dataReductionAlgorithm" : {
+								"top" : {}
+							}
+						}
+					}
+				},
+				"script" : {
+					"scriptProviderDefault" : "R",
+					"scriptOutputType" : "png",
+					"source" : {
+						"objectName" : "rcv_script",
+						"propertyName" : "source"
+					},
+					"provider" : {
+						"objectName" : "rcv_script",
+						"propertyName" : "provider"
+					}
+				}
+			}
+		}
+	],
+	"objects" : {
+		"settings_tsdecomp_params" : {
+			"displayName" : "Time series decomposition",
+			"properties" : {
+				"show" : {
+					"type" : {
+						"bool" : true
+					}
+				},
+				"freq" : {
+					"displayName" : "frequency",
+					"description" : "number of samples per period",
+					"type" : {
+						"numeric" : true
+					}
+				},
+				"degree" : {
+					"displayName" : "degree",
+					"description" : "degree of locally-fitted polynomial in seasonal extraction and trend extraction",
+					"type" : {
+						"bool" : true
+					}
+				},
+				"robustToOutliers" : {
+					"displayName" : "robust",
+					"description" : "logical indicating if robust fitting be used in the loess procedure",
+					"type" : {
+						"bool" : true
+					}
+				},
+				"model" : {
+					"displayName" : "model",
+					"description" : "switch between additive and multiplicative decomposition models ",
+					"type" : {
+						"enumeration" : [
+							{
+								"displayName" : "additive",
+								"value" : "additive"
+							},
+							{
+								"displayName" : "multiplicative",
+								"value" : "multiplicative"
+							}
+						]
+					}
+				},
+				"percentile" : {
+					"displayName" : "smoothness",
+					"description" : "trend and seasonality smoothness",
+					"type" : {
+						"numeric" : true
+					}
+				},
+				"weight" : {
+					"displayName" : "line width",
+					"description" : "line width",
+					"type" : {
+						"numeric" : true
+					}
+				},
+				"drawWhat" : {
+					"displayName" : "plot",
+					"description" : "specify the plot type",
+					"type" : {
+						"enumeration" : [
+							{
+								"displayName" : "all",
+								"value" : "all"
+							},
+							{
+								"displayName" : "trend",
+								"value" : "trend"
+							},
+							{
+								"displayName" : "seasonal",
+								"value" : "seasonal"
+							},
+							{
+								"displayName" : "clean",
+								"value" : "clean"
+							},
+							{
+								"displayName" : "noise",
+								"value" : "noise"
+							}
+						]
+					}
+				}
+			}
+		},
+		"rcv_script" : {
+			"properties" : {
+				"provider" : {
+					"type" : {
+						"text" : true
+					}
+				},
+				"source" : {
+					"type" : {
+						"scripting" : {
+							"source" : true
+						}
+					}
+				}
+			}
+		}
+	},
+	"suppressDefaultTitle" : true
+}

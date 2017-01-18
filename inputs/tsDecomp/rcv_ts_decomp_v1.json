@@ -1,0 +1,335 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Time",
+      "description": "Time column",
+      "kind": "Grouping",
+      "name": "Time",
+      "conditions": [
+        {
+          "max": 1,
+          "min": 1
+        }
+      ]
+    },
+    {
+      "displayName": "Value",
+      "description": "Numeric column",
+      "kind": "Measure",
+      "name": "Value",
+      "conditions": [
+        {
+          "max": 1,
+          "min": 1
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "settings_model_params": {
+      "displayName": "Time series model",
+	  "description": "Adjust the type of decomposition and the seasonality",
+      "properties": {
+        "modelType": {
+          "displayName": "Decomposition model",
+          "description": "Switch between additive and multiplicative decomposition models ",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "additive",
+                "value": "additive"
+              },
+              {
+                "displayName": "multiplicative",
+                "value": "multiplicative"
+              },
+              {
+                "displayName": "automatic",
+                "value": "automatic"
+              }
+            ]
+          },
+          "default": "automatic",
+          "min": null,
+          "max": null
+        },
+        "targetSeasonality": {
+          "displayName": "Seasonal factor",
+          "description": "Specify recommended seasonal factor",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "autodetect from date",
+                "value": "autodetect from date"
+              },
+              {
+                "displayName": "none",
+                "value": "none"
+              },
+              {
+                "displayName": "manual",
+                "value": "manual"
+              },
+              {
+                "displayName": "hour",
+                "value": "hour"
+              },
+              {
+                "displayName": "day",
+                "value": "day"
+              },
+              {
+                "displayName": "week",
+                "value": "week"
+              },
+              {
+                "displayName": "month",
+                "value": "month"
+              },
+              {
+                "displayName": "quater",
+                "value": "quater"
+              },
+              {
+                "displayName": "year",
+                "value": "year"
+              }
+            ]
+          },
+          "default": "autodetect from date",
+          "min": null,
+          "max": null
+        },
+        "freq": {
+          "displayName": "Frequency",
+          "description": "Number of samples per season",
+          "type": {
+            "numeric": true
+          },
+          "default": 12,
+          "min": 1,
+          "max": 10000
+        }
+      }
+    },
+    "settings_algo_params": {
+      "displayName": "Algorithm parameters",
+      "description": "Control inner parameters of 'Seasonal Decomposition of Time Series by Loess'",
+      "properties": {
+        "degree": {
+          "displayName": "Degree",
+          "description": "Degree of locally-fitted polynomial in seasonal extraction and trend extraction",
+          "type": {
+            "bool": true
+          },
+          "default": false,
+          "min": null,
+          "max": null
+        },
+        "robustToOutliers": {
+          "displayName": "Robust to outliers",
+          "description": "Indicating if robust fitting be used in the loess procedure",
+          "type": {
+            "bool": true
+          },
+          "default": true,
+          "min": null,
+          "max": null
+        },
+        "percentile": {
+          "displayName": "Trend smoothness",
+          "rname": "trendSmoothness",
+          "description": "Trend smoothness",
+          "type": {
+            "numeric": true
+          },
+          "default": 50,
+          "min": 1,
+          "max": 100
+        }
+      }
+    },
+    "settings_plot_params": {
+      "displayName": "Graphical parameters",
+      "description": "Select plot type and visualisation attributes",
+      "properties": {
+        "plotType": {
+          "displayName": "Plot type",
+          "description": "specify the plot type",
+          "type": {
+            "enumeration": [
+              {
+                "displayName": "decomposition",
+                "value": "all"
+              },
+              {
+                "displayName": "trend",
+                "value": "trend"
+              },
+              {
+                "displayName": "seasonal",
+                "value": "seasonal"
+              },
+              {
+                "displayName": "clean",
+                "value": "clean"
+              },
+              {
+                "displayName": "reminder",
+                "value": "reminder"
+              }, 
+			  {
+                "displayName": "by season",
+                "value": "byseason"
+              }, 
+			  {
+                "displayName": "by season clean",
+                "value": "byseasonClean"
+              }
+            ]
+          },
+          "default": "all",
+          "min": null,
+          "max": null
+        },
+        "weight": {
+          "displayName": "Line width",
+          "rname": "lineWidth",
+          "description": "line width",
+          "type": {
+            "numeric": true
+          },
+          "default": 10,
+          "min": 1,
+          "max": 50
+        },
+        "lineCol": {
+          "displayName": "Line color",
+          "description": "line color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "default": "red",
+          "min": null,
+          "max": null
+        },
+        "labelsCol": {
+          "displayName": "Labels color",
+          "description": "labels color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "default": "orange",
+          "min": null,
+          "max": null
+        },
+        "textSize": {
+          "displayName": "Labels font size",
+		  "rname": "labelsFont",
+          "description": "labels font size",
+          "type": {
+            "numeric": true
+          },
+          "default": 10,
+          "min": 8,
+          "max": 40
+        }
+      }
+    },
+    "settings_extra_params": {
+      "displayName": "Show information",
+      "description": " Show infromation and warnings",
+      "properties": {
+        "show": {
+          "type": {
+            "bool": true
+          },
+          "default": true,
+		  "rname" : "showWarnInfo",
+          "min": null,
+          "max": null
+        },
+        "textSize": {
+          "displayName": "Font size",
+		  "rname" : "infoFontSize",
+          "type": {
+            "numeric": true
+          },
+          "default": 8,
+          "min": 8,
+          "max": 40
+        },
+		"infoCol": {
+          "displayName": "Text color",
+          "description": "Text color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          },
+          "default": "gray",
+          "min": null,
+          "max": null
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "cranPackages": [
+      {
+        "name": "ggplot2",
+        "displayName": "ggplot2: An Implementation of the Grammar of Graphics",
+        "url": "https://cran.r-project.org/web/packages/ggplot2/index.html"
+      },
+	  {
+        "name": "zoo",
+        "displayName": "zoo: S3 Infrastructure for Regular and Irregular Time Series",
+        "url": "https://cran.r-project.org/web/packages/zoo/index.html"
+      }
+    ]
+  },
+  "pbiviz": {
+    "visual": {
+      "name": "Time series decomposition",
+      "displayName": "Time series decomposition",
+      "guid": "PBI_CV_CAD60C71_FAD5_4B59_A498_A7FB0DDC7A2B",
+      "visualClassName": "Visual",
+      "version": "1.0.0",
+      "description": "<span>Time series decomposition is an essential analytics tool to  understand the time series components and to improve the forecast. Current visual implements well known “Seasonal and Trend decomposition using Loess” and it provides several types of plots. You can control the algorithm parameters and the visual attributes to suit your needs.<br/><br/><span style='font-style:italic'>Service prerequisites:</span> R-powered custom visual is used in service seamlessly<br/><br /><span style='font-style:italic'>Desktop prerequisites:</span> To run R scripts in Power BI Desktop, you must separately install R on your local computer.<br />You can download and install R for free from the <a href='https://mran.revolutionanalytics.com/download/'>Revolution Open download page</a> or the <a href='https://cran.r-project.org/bin/windows/base/'>CRAN Repository</a><br /><br /> <span style='font-style:italic'> R package dependencies(auto-installed): </span> ggplot2, zoo <br /><br /> <span style='font-style:italic'> Supports R versions: </span> R 3.3.2, R 3.3.1, R 3.3.0, MRO 3.3.1, MRO 3.3.0, MRO 3.2.2  <br /></span>",
+      "supportUrl": "http://community.powerbi.com/",
+      "gitHubUrl": "https://github.com/microsoft/PowerBI-visuals-time-series-decomposition"
+    },
+    "apiVersion": "1.3.0",
+    "author": {
+      "name": "Microsoft",
+      "email": "pbicvsupport@microsoft.com"
+    },
+    "assets": {
+      "icon": "assets/icon.png"
+    },
+    "externalJS": [],
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": "dependencies.json"
+  },
+  "info": {
+    "nameParentDir": "c:/Users/boefraty/projects/PBI/R/ProjectR2pbiviz",
+    "namePbivizDir": "newRpbivizTsDecomp1",
+    "created": null,
+    "lastUpdate": null
+  },
+  "sourceRscript": {
+    "inputRscriptName": "c:\\Users\\boefraty\\projects\\PBI\\R\\ProjectR2pbiviz\\inputs\\tsDecomp\\tsDecompositionWithLoess.R",
+    "funcName": "TimeSeriesDecomposition"
+  }
+}

@@ -1,0 +1,14 @@
+{
+ "cranPackages": [
+ {
+ "name": "car",
+"displayName": "car: Companion to Applied Regression",
+"url": "https://cran.r-project.org/web/packages/car/index.html" 
+},
+{
+ "name": "ggplot2",
+"displayName": "ggplot2: An Implementation of the Grammar of Graphics",
+"url": "https://cran.r-project.org/web/packages/ggplot2/index.html" 
+} 
+] 
+}
